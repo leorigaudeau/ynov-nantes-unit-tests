@@ -1,0 +1,66 @@
+---
+swagger: '2.0'
+info:
+    description: 'Basic API description which descrbie to do list creation and management'
+    version: '1.0'
+    title: 'todo'
+    license:
+        name: 'MIT'
+host: 'localhost:5000'
+basePath: '/'
+schemes:
+    - 'http'
+paths:
+    /todo:
+        get:
+            summary: 'Retrieve todo list content'
+            produces:
+                - 'application/json'
+            responses:
+                '200':
+                    description: 'Return to do list array'
+                    schema:
+                        type: 'array'
+                        items:
+                            $ref: '#/definitions/element'
+                '400':
+                    description: 'Bad Request'
+        post:
+            summary: 'Add one element to the todo list'
+            produces:
+                - 'application/json'
+            responses:
+                '200':
+                    description: 'Element properly added'
+                '400':
+                    description: 'Bad request'
+    /todo/{id}:
+        patch:
+            summary: 'Mark one to do list element as done'
+            produces:
+                - 'application/json'
+            parameters:
+                - name: 'id'
+                  in: 'path'
+                  description: 'Id of the todo list element to mark as done'
+                  required: true
+                  type: 'string'
+            responses:
+                '200':
+                    description: 'Element properly marked as done'
+                '400':
+                    description: 'Bad Request'
+definitions:
+    element:
+        type: 'object'
+        properties:
+            text:
+                type: 'string'
+            done:
+                type: 'boolean'
+                default: false
+        xml:
+            name: 'element'
+        example:
+            name: 'test'
+            done: false
